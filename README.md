@@ -4,7 +4,7 @@ A lightweight framework that simulates a clock and allows you to use listeners.
 ## Install
 
 ```
-npm i ecr-clockjs
+npm i @ecromaneli/clockjs
 ```
 
 ## Constructors
@@ -13,7 +13,7 @@ npm i ecr-clockjs
 To use ClockJS, import script with this code:
 
 ```typescript
-const ClockJS = require('ecr-clockjs').ClockJS
+const {ClockJS} = require('@ecromaneli/clockjs')
 ```
 
 ### Now
@@ -49,6 +49,36 @@ ClockJS.fromTimestamp(timestamp: number): ClockJS
 .off(events: string, handler: (event: string, clock: ClockJS) => void);
 ```
 
+## Format date
+You can format the clock time any way you want by using a string with:
+- `Y` year, 1 - 4 digits;
+- `M` month number, 1 or 2 digits;
+- `W` weekday number, 1 or 2 digits;
+- `D` day, 1 or 2 digits;
+- `H` hours (24 hours), 1 or 2 digits;
+- `h` hours, 1 or 2 digits;
+- `m` minutes, 1 or 2 digits;
+- `s` seconds, 1 or 2 digits;
+- `u` milliseconds in seconds, 1 digit (.000);
+- `TZD` timezone, [+-]HH:mm or Z;
+- `MMM` or `MON` month abbrev. (Jan, Feb, Mar...);
+- `MONTH` month name (January, February...);
+- `WWW` weekday abbrev. (Mon, Tue, Wed...);
+- `WEEKDAY` weekday name (Monday, Tuesday...).
+
+The function:
+```typescript
+    // Print something like 2018 Jun 04, 15:49:32.770
+    .format('YYYY MON DD, hh:mm:ss.u');
+```
+
+### For example:
+The ISO 8601 format is: `2018-06-04T05:57:23.557Z`.
+```typescript
+    // ISO 8601
+    clock.format('YYYY-MM-DDThh:mm:ss.uTZD');
+```
+
 ## Usage Example
 ```typescript
 const ClockJS = require('ecr-clockjs').ClockJS;
@@ -70,7 +100,7 @@ clock.off("year day", handler);
 // Stop clock
 clock.stop();
 ```
-
+> **Obs.:** You don't need start the clock to use date information or .format() method. You need start, to use listeners.
 
 ## Getters (ES5 Format)
 ### Year
@@ -102,14 +132,11 @@ clock.stop();
 ### Others
 - `dateTime: string` string of current time in DateTime format;
 - `timezone: string` current timezone. ( [+-]hh:mm|Z )
-### Others
-- `timestamp: number` current timestamp;
-- `speed: number` return current milliseconds.
 
 ## Getters & Setters (ES5 Format)
-- `speed: number` clock speed [0-59] (default: 1);
+- `speed: number` clock speed [0 - 59] (default: 1);
 - `timestamp: number` current timestamp;
-- `clockTick: number` current clocktick time in ms [10-1000].
+- `clockTick: number` current clocktick time in ms [10 - 1000].
 
 ## Example
 
