@@ -1,0 +1,6 @@
+lib/
+dist/web/
+
+build.sh
+tsconfig.json
+.gitignore

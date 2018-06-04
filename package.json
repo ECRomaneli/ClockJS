@@ -1,8 +1,8 @@
 {
   "name": "ecr-clockjs",
-  "version": "0.9.3",
+  "version": "1.0.1",
   "description": "A lightweight framework that simulates a clock and allows you to use listeners.",
-  "main": "dist/clock.js",
+  "main": "dist/module/clock.js",
   "scripts": {
     "build": "sh build.sh",
     "test": "node test/test.js"
