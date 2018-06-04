@@ -184,7 +184,7 @@ var ClockJS = /** @class */ (function () {
      */
     ClockJS.prototype.format = function (format) {
         var _this = this;
-        return format.replace(/MONTH|WEEKDAY|[usmhHdDwWMyY]+|TZD/g, function (type) {
+        return format.replace(/MONTH|MON|WEEKDAY|([usmhHdDwWMyY])\1*|TZD/g, function (type) {
             var ch = type.charAt(0), length = type.length;
             if (ch.toUpperCase() === 'Y') {
                 return ClockJS.pad(_this.year, length);

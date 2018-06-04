@@ -200,7 +200,7 @@ export class ClockJS {
      * @return formated date
      */
     public format(format: string): string {
-        return format.replace(/MONTH|WEEKDAY|[usmhHdDwWMyY]+|TZD/g, (type) => {
+        return format.replace(/MONTH|MON|WEEKDAY|([usmhHdDwWMyY])\1*|TZD/g, (type) => {
             let ch = type.charAt(0), length = type.length;
 
             if (ch.toUpperCase() === 'Y') {return ClockJS.pad(this.year, length); }
