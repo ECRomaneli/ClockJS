@@ -1,7 +1,10 @@
-type ClockListener = Function;
+export type ClockListener = (event: string, clock: ClockJS, data?: Array<any>) => void;
 type AssociativeArray = Object;
 
-enum InSeconds {
+/**
+ * Time units in seconds
+ */
+export enum InSeconds {
     Year = 3.154e7,
     Month = 2.628e6,
     Week = 604800,
@@ -11,7 +14,10 @@ enum InSeconds {
     Second = 1
 }
 
-enum Month {
+/**
+ * Month names
+ */
+export enum Month {
     January = 0,
     February = 1,
     March = 2,
@@ -26,7 +32,10 @@ enum Month {
     December = 11
 }
 
-enum Weekday {
+/**
+ * Weekday names
+ */
+export enum Weekday {
     Sunday = 0,
     Monday = 1,
     Tuesday = 2,
@@ -36,36 +45,49 @@ enum Weekday {
     Saturday = 6
 }
 
-class ClockJS {
+/**
+ * ClockJS Core
+ */
+export class ClockJS {
     // INTERVAL PROPERTIES
     private _id: any = null;
     private _timeout: number = 50;
     // CLOCK PROPERTIES
-    private _year: number;
-    private _month: number;
-    private _weekday: number;
-    private _day: number;
-    private _hours: number;
-    private _minutes: number;
-    private _seconds: number;
-    private _milliseconds: number;
-    private _timezone: number;
-    private _timestamp: number;
-    private _cache = {
-        lastDayOfMonth: []
-    };
+    private _year: number = -1;
+    private _month: number = -1;
+    private _weekday: number = -1;
+    private _day: number = -1;
+    private _hours: number = -1;
+    private _minutes: number = -1;
+    private _seconds: number = -1;
+    private _milliseconds: number = -1;
+    private _timezone: number = -1;
+    private _timestamp: number = -1;
+    private _cache = {lastDayOfMonth: <number[]>[]};
     // CLOCK SETTINGS
     private _speed: number = 1;
     // HANDLERS
     private _listeners: Array<Array<ClockListener>> = [];
 
+    /**
+     * Default constructor.
+     */
     private constructor () {}
 
+    /**
+     * Return if clock is already started.
+     * @return already started
+     */
     public alreadyStarted(): boolean {
         return !!this._id;
     }
 
-    public start(speed?: number): ClockJS {
+    /**
+     * Start ticking.
+     * @param speed [OPTIONAL] Speed
+     * @return ClockJS instance
+     */
+    public start(speed: number = this.speed): ClockJS {
         let context = this;
 
         if (this._id) {
@@ -73,13 +95,17 @@ class ClockJS {
             return this;
         }
 
-        if (ClockJS.isSet(speed)) {this._speed = speed; }
+        this._speed = speed;
 
         this._id = setInterval(() => {this.tick(); }, this.clockTick);
         this.trigger('start');
         return this;
     }
 
+    /**
+     * Manually tick.
+     * @return ClockJS instance
+     */
     public tick(): ClockJS {
         let old = new Date(this.timestamp);
 
@@ -105,6 +131,10 @@ class ClockJS {
         return this;
     }
 
+    /**
+     * Stop ticking.
+     * @return ClockJS instance
+     */
     public stop(): ClockJS {
         if (!this._id) {
             console.info('This clock is already stopped!');
@@ -117,6 +147,12 @@ class ClockJS {
         return this;
     }
 
+    /**
+     * Bind event handler.
+     * @param events events separated by space
+     * @param handler listener
+     * @return ClockJS instance
+     */
     public on(events: string, handler: ClockListener): ClockJS {
         events.split(' ').forEach((event: string) => {
             this.getListeners(event).push(handler);
@@ -125,7 +161,10 @@ class ClockJS {
     }
 
     /**
-     * TESTME
+     * Unbind event handler.
+     * @param events events separated by space
+     * @param handler listener (same as .on())
+     * @return ClockJS instance
      */
     public off(events?: string, handler?: ClockListener): ClockJS {
         if (!events) {return this.clearListeners(); }
@@ -142,13 +181,24 @@ class ClockJS {
         return this;
     }
 
+    /**
+     * Trigger binded handlers.
+     * @param event event name
+     * @param data event data
+     * @return ClockJS instance
+     */
     public trigger(event: string, data: Array<any> = [this]): ClockJS {
         data.unshift(event);
         this.getListeners(event).forEach((handler: ClockListener) => handler.apply(this, data));
         return this;
     }
 
-    // YYYY-MM-DD hh:mm:ss.u TZD (HH for 24 hours)
+    /**
+     * Format date using string.
+     * YYYY-MM-DD hh:mm:ss.u TZD (HH for 24 hours)
+     * @param format format string
+     * @return formated date
+     */
     public format(format: string): string {
         return format.replace(/MONTH|WEEKDAY|[usmhHdDwWMyY]+|TZD/g, (type) => {
             let ch = type.charAt(0), length = type.length;
@@ -175,6 +225,10 @@ class ClockJS {
         });
     }
 
+    /**
+     * Set date from timestamp.
+     * @param timestamp timestamp in milliseconds
+     */
     private setDateFromTimestamp(timestamp: number): void {
         let date = new Date(timestamp);
         this._year = date.getFullYear();
@@ -189,14 +243,24 @@ class ClockJS {
         this._timestamp = timestamp;
     }
 
-    private getListeners(event: string): Array<ClockListener> {
+    /**
+     * Get listeners.
+     * @param event event name
+     * @return listeners
+     */
+    private getListeners(event: any): Array<ClockListener> {
         if (ClockJS.isSet(this._listeners[event])) {
             return this._listeners[event];
         }
         return this._listeners[event] = [];
     }
 
-    private clearListeners(event?: string): ClockJS {
+    /**
+     * Clear listeners.
+     * @param event [OPTIONAL] event to be cleared
+     * @return ClockJS instance
+     */
+    private clearListeners(event?: any): ClockJS {
         if (event) {
             this._listeners[event] = [];
         } else {
@@ -205,32 +269,60 @@ class ClockJS {
         return this;
     }
 
+    /**
+     * Return float part of time unit.
+     * @param seconds time in seconds
+     * @return float part
+     */
     private remainder(seconds: InSeconds): number {
         return (this.timestamp / (seconds * 1000)) % 1;
     }
 
     /* *** STATIC METHODS *** */
 
-    private static lastDayOfMonth(month: Month, year: number): number {
+    /**
+     * Return last day of a specific month.
+     * @param month Month
+     * @param year Year
+     * @return last day of month
+     */
+    public static lastDayOfMonth(month: Month, year: number): number {
         return new Date(year, month + 1, 0).getDate();
     }
 
+    /**
+     * Timestamp now.
+     * @return timestamp in milliseconds
+     */
     public static timestampNow(): number {
-        let p = window.performance;
-        return  p && p.now && p.timing && p.timing.navigationStart ?
-                p.now() + p.timing.navigationStart : Date.now();
+        return Date.now();
     }
 
+    /**
+     * Return instance from timestamp.
+     * @param timestamp timestamp in milliseconds
+     * @return ClockJS instance from timestamp
+     */
     public static fromTimestamp(timestamp: number): ClockJS {
         let clock = new ClockJS();
         clock.setDateFromTimestamp(timestamp);
         return clock;
     }
 
+    /**
+     * Return instance from actual time.
+     * @return ClockJS instance
+     */
     public static now(): ClockJS {
         return ClockJS.fromTimestamp(ClockJS.timestampNow());
     }
 
+    /**
+     * Pad with zeros.
+     * @param num number
+     * @param pads number of pads
+     * @param right pad right?
+     */
     private static pad(num: any, pads: number, right: boolean = false): string {
         if (!num && num != 0) {return ClockJS.pad(0, pads, right); }
         let zeros = '';
@@ -240,6 +332,11 @@ class ClockJS {
         return (zeros + num).slice(pads * -1);
     }
 
+    /**
+     * Is set variable.
+     * @param obj variable
+     * @return if object is setted
+     */
     private static isSet(obj: any): boolean {
         return obj !== undefined;
     }

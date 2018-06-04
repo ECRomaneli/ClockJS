@@ -1,0 +1,30 @@
+{
+  "name": "ecr-clockjs",
+  "version": "0.9.3",
+  "description": "A lightweight framework that simulates a clock and allows you to use listeners.",
+  "main": "dist/clock.js",
+  "scripts": {
+    "build": "sh build.sh",
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ECRomaneli/ClockJS.git"
+  },
+  "devDependencies": {
+    "typescript": "^2.9.1"
+  },
+  "keywords": [
+    "clock-js",
+    "clockjs",
+    "clock",
+    "lighweight",
+    "framework"
+  ],
+  "author": "ECRomaneli",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ECRomaneli/ClockJS/issues"
+  },
+  "homepage": "https://github.com/ECRomaneli/ClockJS#readme"
+}

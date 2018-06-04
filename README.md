@@ -1,14 +1,29 @@
 # ClockJS
 A lightweight framework that simulates a clock and allows you to use listeners.
 
+## Install
+
+```
+npm i ecr-clockjs
+```
+
 ## Constructors
 
+### Import script
+To use ClockJS, import script with this code:
+
+```typescript
+const ClockJS = require('ecr-clockjs').ClockJS
+```
+
 ### Now
+To get instance of ClockJS with actual date, use:
 ```typescript
 ClockJS.now(): ClockJS
 ```
 
 ### From timestamp
+To get instance of ClockJS with timestamp in milliseconds (like Date.now()), use:
 ```typescript
 ClockJS.fromTimestamp(timestamp: number): ClockJS
 ```
@@ -30,18 +45,20 @@ ClockJS.fromTimestamp(timestamp: number): ClockJS
 
 ### Bind and Unbind handlers
 ```typescript
-.on(events: string, handler: (event: string, clock: ClockJS) => void);
-.off(events: string, handler: Function) => void);
+.on (events: string, handler: (event: string, clock: ClockJS) => void);
+.off(events: string, handler: (event: string, clock: ClockJS) => void);
 ```
 
 ## Usage Example
 ```typescript
+const ClockJS = require('ecr-clockjs').ClockJS;
 let clock = ClockJS.now();
+
 let handler = (event, clock) => {
     console.log(clock.format("YYYY-MM-DD hh:mm:ss"));
 };
 
-// Start clock
+// Start clock (now, clock ticking)
 clock.start();
 
 // Bind handler on year, day and second change
