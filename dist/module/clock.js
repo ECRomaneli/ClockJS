@@ -152,7 +152,8 @@ class ClockJS {
         events.split(' ').forEach((event) => {
             let listeners = this.getListeners(event);
             if (!handler) {
-                return this.clearListeners(event);
+                this.clearListeners(event);
+                return;
             }
             let indexOf = listeners.indexOf(handler);
             if (indexOf >= 0) {
@@ -167,8 +168,8 @@ class ClockJS {
      * @param data event data
      * @return ClockJS instance
      */
-    trigger(event, data = [this]) {
-        data.unshift(event);
+    trigger(event, data = []) {
+        data.unshift(event, this);
         this.getListeners(event).forEach((handler) => handler.apply(this, data));
         return this;
     }

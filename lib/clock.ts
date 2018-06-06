@@ -1,4 +1,4 @@
-export type ClockListener = (event: string, clock: ClockJS, data?: Array<any>) => void;
+export type ClockListener = (event: string, clock: ClockJS, data?: any) => void;
 type AssociativeArray = Object;
 
 /**
@@ -171,7 +171,8 @@ export class ClockJS {
         events.split(' ').forEach((event: string) => {
             let listeners = this.getListeners(event);
             if (!handler) {
-                return this.clearListeners(event);
+                this.clearListeners(event);
+                return;
             }
             let indexOf = listeners.indexOf(handler);
             if (indexOf >= 0) {
@@ -187,8 +188,8 @@ export class ClockJS {
      * @param data event data
      * @return ClockJS instance
      */
-    public trigger(event: string, data: Array<any> = [this]): ClockJS {
-        data.unshift(event);
+    public trigger(event: string, data: Array<any> = []): ClockJS {
+        data.unshift(event, this);
         this.getListeners(event).forEach((handler: ClockListener) => handler.apply(this, data));
         return this;
     }
