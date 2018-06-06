@@ -1,12 +1,14 @@
-<div style="text-align:center; position: relative; width: 100%;">
-<img src="https://s33.postimg.cc/4y7d4s7jj/clockjs.png" alt='logo' /><br/>
-A lightweight framework that simulates a clock and allows you to use listeners<p/>
-<img src="https://img.shields.io/npm/v/@ecromaneli/clockjs.svg" alt="module version">&nbsp;
-<img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license">&nbsp;
-<img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="contributions welcome">
-</div>
-
-
+<p align='center'>
+    <img src="https://s33.postimg.cc/4y7d4s7jj/clockjs.png" alt='logo' />
+</p>
+<p align='center'>
+    A lightweight framework that simulates a clock and allows you to use listeners
+<p/>
+<p align='center'>
+    <img src="https://img.shields.io/npm/v/@ecromaneli/clockjs.svg" alt="module version">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license">
+    <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="contributions welcome">
+</p>
 
 ## Install
 
