@@ -1,8 +1,9 @@
 {
   "name": "@ecromaneli/clockjs",
-  "version": "1.0.9",
+  "version": "1.0.12",
   "description": "A lightweight framework that simulates a clock and allows you to use listeners.",
-  "main": "dist/module/clock.js",
+  "main": "dist/module/clock",
+  "typings": "dist/module/clock",
   "scripts": {
     "build": "sh build.sh",
     "test": "node test/test.js"

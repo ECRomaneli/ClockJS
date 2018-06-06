@@ -154,7 +154,8 @@ var ClockJS = /** @class */ (function () {
         events.split(' ').forEach(function (event) {
             var listeners = _this.getListeners(event);
             if (!handler) {
-                return _this.clearListeners(event);
+                _this.clearListeners(event);
+                return;
             }
             var indexOf = listeners.indexOf(handler);
             if (indexOf >= 0) {
@@ -171,8 +172,8 @@ var ClockJS = /** @class */ (function () {
      */
     ClockJS.prototype.trigger = function (event, data) {
         var _this = this;
-        if (data === void 0) { data = [this]; }
-        data.unshift(event);
+        if (data === void 0) { data = []; }
+        data.unshift(event, this);
         this.getListeners(event).forEach(function (handler) { return handler.apply(_this, data); });
         return this;
     };

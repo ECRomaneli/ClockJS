@@ -1,4 +1,4 @@
-export declare type ClockListener = (event: string, clock: ClockJS, data?: Array<any>) => void;
+export declare type ClockListener = (event: string, clock: ClockJS, data?: any) => void;
 /**
  * Time units in seconds
  */
