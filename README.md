@@ -1,5 +1,12 @@
-# ClockJS
-A lightweight framework that simulates a clock and allows you to use listeners.
+<div style="text-align:center; position: relative; width: 100%;">
+<img src="https://s33.postimg.cc/4y7d4s7jj/clockjs.png" alt='logo' /><br/>
+A lightweight framework that simulates a clock and allows you to use listeners<p/>
+<img src="https://img.shields.io/npm/v/@ecromaneli/clockjs.svg" alt="module version">&nbsp;
+<img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license">&nbsp;
+<img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="contributions welcome">
+</div>
+
+
 
 ## Install
 
@@ -45,8 +52,8 @@ ClockJS.fromTimestamp(timestamp: number): ClockJS
 
 ### Bind and Unbind handlers
 ```typescript
-.on (events: string, handler: (event: string, clock: ClockJS) => void);
-.off(events: string, handler: (event: string, clock: ClockJS) => void);
+.on (events: string, handler: (event: string, clock: ClockJS) => void)
+.off(events: string, handler: (event: string, clock: ClockJS) => void)
 ```
 
 ## Format date
@@ -69,36 +76,36 @@ You can format the clock time any way you want by using a string with:
 The function:
 ```typescript
     // Print something like 2018 Jun 04, 15:49:32.770
-    .format('YYYY MON DD, hh:mm:ss.u');
+    .format('YYYY MON DD, hh:mm:ss.u')
 ```
 
 ### For example:
 The ISO 8601 format is: `2018-06-04T05:57:23.557Z`.
 ```typescript
     // ISO 8601
-    clock.format('YYYY-MM-DDThh:mm:ss.uTZD');
+    clock.format('YYYY-MM-DDThh:mm:ss.uTZD')
 ```
 
 ## Usage Example
 ```typescript
-const ClockJS = require('ecr-clockjs').ClockJS;
-let clock = ClockJS.now();
+const {ClockJS} = require('@ecromaneli/clockjs')
+let clock = ClockJS.now()
 
 let handler = (event, clock) => {
-    console.log(clock.format("YYYY-MM-DD hh:mm:ss"));
+    console.log(clock.format('YYYY-MM-DD hh:mm:ss'))
 };
 
 // Start clock (now, clock ticking)
-clock.start();
+clock.start()
 
 // Bind handler on year, day and second change
-clock.on("year day second", handler);
+clock.on('year day second', handler)
 
 // Unbind handler on year and day change
-clock.off("year day", handler);
+clock.off('year day', handler)
 
 // Stop clock
-clock.stop();
+clock.stop()
 ```
 > **Obs.:** You don't need start the clock to use date information or .format() method. You need start, to use listeners.
 
@@ -152,4 +159,4 @@ clock.timestamp = Date.now(); // SET (update actual timestamp)
 
 ## License
 
-[MIT License](https://github.com/laradock/laradock/blob/master/LICENSE)
+[MIT License](https://github.com/ECRomaneli/ClockJS/blob/master/LICENSE.md)
