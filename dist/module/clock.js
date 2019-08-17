@@ -85,7 +85,6 @@ class ClockJS {
      * @return ClockJS instance
      */
     start(speed = this.speed) {
-        let context = this;
         if (this._id) {
             console.info('This clock is already started!');
             return this;
@@ -103,12 +102,11 @@ class ClockJS {
         let old = new Date(this.timestamp);
         this.timestamp += this.speed * this.clockTick;
         this.trigger('ticking');
-        let s = this.seconds === old.getSeconds(), m = this.minutes === old.getMinutes(), h = this.hours === old.getHours(), D = this.day === old.getDate(), W = this.weekday === old.getDay(), M = this.month === old.getMonth(), Y = this.year === old.getFullYear();
-        s && m && h && D && W && M && Y || this.trigger('second');
-        m && h && D && W && M && Y || this.trigger('minute');
-        h && D && W && M && Y || this.trigger('hour');
-        D && W && M && Y || this.trigger('day');
-        W && M && Y || this.trigger('weekday');
+        let s = this.seconds === old.getSeconds(), m = this.minutes === old.getMinutes(), h = this.hours === old.getHours(), D = this.day === old.getDate(), M = this.month === old.getMonth(), Y = this.year === old.getFullYear();
+        s && m && h && D && M && Y || this.trigger('second');
+        m && h && D && M && Y || this.trigger('minute');
+        h && D && M && Y || this.trigger('hour');
+        D && M && Y || (this.trigger('day') && this.trigger('weekday'));
         M && Y || this.trigger('month');
         Y || this.trigger('year');
         return this;
@@ -334,7 +332,7 @@ class ClockJS {
      * @return if object is setted
      */
     static isSet(obj) {
-        return obj !== undefined;
+        return obj !== void 0;
     }
     /* *** GETTERS & SETTERS *** */
     get year() {
