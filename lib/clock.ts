@@ -1,5 +1,4 @@
 export type ClockListener = (event: string, clock: ClockJS, data?: any) => void;
-type AssociativeArray = Object;
 
 /**
  * Time units in seconds
@@ -88,8 +87,6 @@ export class ClockJS {
      * @return ClockJS instance
      */
     public start(speed: number = this.speed): ClockJS {
-        let context = this;
-
         if (this._id) {
             console.info('This clock is already started!');
             return this;
@@ -116,17 +113,15 @@ export class ClockJS {
             m = this.minutes === old.getMinutes(),
             h = this.hours === old.getHours(),
             D = this.day === old.getDate(),
-            W = this.weekday === old.getDay(),
             M = this.month === old.getMonth(),
             Y = this.year === old.getFullYear();
 
-        s&&m&&h&&D&&W&&M&&Y || this.trigger('second');
-        m&&h&&D&&W&&M&&Y    || this.trigger('minute');
-        h&&D&&W&&M&&Y       || this.trigger('hour');
-        D&&W&&M&&Y          || this.trigger('day');
-        W&&M&&Y             || this.trigger('weekday');
-        M&&Y                || this.trigger('month');
-        Y                   || this.trigger('year');
+        s&&m&&h&&D&&M&&Y || this.trigger('second');
+        m&&h&&D&&M&&Y    || this.trigger('minute');
+        h&&D&&M&&Y       || this.trigger('hour');
+        D&&M&&Y          || (this.trigger('day') && this.trigger('weekday'));
+        M&&Y             || this.trigger('month');
+        Y                || this.trigger('year');
 
         return this;
     }
@@ -339,7 +334,7 @@ export class ClockJS {
      * @return if object is setted
      */
     private static isSet(obj: any): boolean {
-        return obj !== undefined;
+        return obj !== void 0;
     }
 
     /* *** GETTERS & SETTERS *** */
